@@ -1,0 +1,6 @@
+{
+  "name": "GLOBAL EXCHANGE AND TRADE INVESTMENTS",
+  "description": "A premium online investment platform inspired by TradingView and Bloomberg. Features luxury dark design, animated charts, profit calculator, live cryptocurrency ticker, robust user and admin dashboards, deposit/withdrawal proof workflows, and a 24/7 Gemini-powered AI support chatbot.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

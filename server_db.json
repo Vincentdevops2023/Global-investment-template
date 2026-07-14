@@ -1,0 +1,193 @@
+{
+  "users": [
+    {
+      "id": "user_admin",
+      "fullName": "Global Exchange Admin",
+      "username": "admin",
+      "email": "admin@globalexchange.com",
+      "phone": "+237 670 123 456",
+      "country": "Cameroon",
+      "totalBalance": 5000000,
+      "activeInvestment": 0,
+      "profitEarned": 1500000,
+      "referralBonus": 250000,
+      "withdrawalBalance": 2500000,
+      "status": "active",
+      "twoFactorEnabled": false,
+      "registrationDate": "2026-06-14T23:09:26.098Z",
+      "isEmailVerified": true
+    },
+    {
+      "id": "user_demo",
+      "fullName": "Nchout Poumie",
+      "username": "npoumie",
+      "email": "user@demo.com",
+      "phone": "+237 699 987 654",
+      "country": "Cameroon",
+      "totalBalance": 125000,
+      "activeInvestment": 50000,
+      "profitEarned": 25000,
+      "referralBonus": 5000,
+      "withdrawalBalance": 75000,
+      "status": "active",
+      "twoFactorEnabled": false,
+      "registrationDate": "2026-07-09T23:09:26.098Z",
+      "isEmailVerified": true
+    }
+  ],
+  "investments": [
+    {
+      "id": "inv_1",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "planId": "plan_a",
+      "planName": "PLAN A (Green Invest)",
+      "amount": 50000,
+      "returnRate": 20,
+      "profit": 10000,
+      "totalReturn": 60000,
+      "durationHours": 24,
+      "remainingHours": 14.24,
+      "status": "active",
+      "createdAt": "2026-07-14T13:39:26.098Z",
+      "expiresAt": "2026-07-15T13:39:26.098Z"
+    },
+    {
+      "id": "inv_completed",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "planId": "plan_b",
+      "planName": "PLAN B (Gold Invest)",
+      "amount": 100000,
+      "returnRate": 25,
+      "profit": 25000,
+      "totalReturn": 125000,
+      "durationHours": 24,
+      "remainingHours": 0,
+      "status": "completed",
+      "createdAt": "2026-07-13T19:09:26.098Z",
+      "expiresAt": "2026-07-14T19:09:26.098Z"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx_1",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "type": "deposit",
+      "amount": 150000,
+      "method": "MTN Mobile Money",
+      "status": "approved",
+      "createdAt": "2026-07-11T23:09:26.098Z",
+      "accountNumber": "677112233",
+      "accountName": "Nchout Poumie",
+      "notes": "Deposit approved"
+    },
+    {
+      "id": "tx_2",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "type": "investment",
+      "amount": 100000,
+      "method": "Account Balance",
+      "status": "approved",
+      "createdAt": "2026-07-13T19:09:26.098Z"
+    },
+    {
+      "id": "tx_3",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "type": "payout",
+      "amount": 125000,
+      "method": "Account Balance",
+      "status": "approved",
+      "createdAt": "2026-07-14T19:09:26.098Z"
+    },
+    {
+      "id": "tx_4",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "type": "investment",
+      "amount": 50000,
+      "method": "Account Balance",
+      "status": "approved",
+      "createdAt": "2026-07-14T13:39:26.098Z"
+    },
+    {
+      "id": "tx_pending_dep",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "type": "deposit",
+      "amount": 75000,
+      "method": "Orange Money",
+      "status": "pending",
+      "createdAt": "2026-07-14T21:09:26.098Z",
+      "accountNumber": "699008877",
+      "accountName": "Nchout Poumie"
+    }
+  ],
+  "referrals": [
+    {
+      "id": "ref_1",
+      "referrerId": "user_demo",
+      "refereeId": "referee_xxx",
+      "refereeName": "Amadou Diallo",
+      "refereeEmail": "amadou@gmail.com",
+      "commissionAmount": 5000,
+      "createdAt": "2026-07-13T23:09:26.098Z",
+      "status": "paid"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "ticket_1",
+      "userId": "user_demo",
+      "username": "npoumie",
+      "subject": "Mobile Money deposit delay",
+      "message": "Hello, I made a deposit of 75,000 XAF via Orange Money 2 hours ago. It is still pending approval. Please assist.",
+      "status": "open",
+      "createdAt": "2026-07-14T21:09:26.098Z",
+      "replies": [
+        {
+          "id": "rep_1",
+          "sender": "system",
+          "senderName": "System",
+          "message": "Your ticket has been opened. Admin will respond shortly.",
+          "createdAt": "2026-07-14T21:09:26.098Z"
+        }
+      ]
+    }
+  ],
+  "plans": [
+    {
+      "id": "plan_a",
+      "name": "PLAN A (Green Invest)",
+      "minAmount": 1000,
+      "maxAmount": 50000,
+      "returnRate": 20,
+      "durationHours": 24,
+      "color": "border-emerald-500/30 bg-emerald-950/20 shadow-emerald-500/5",
+      "badgeColor": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+    },
+    {
+      "id": "plan_b",
+      "name": "PLAN B (Gold Invest)",
+      "minAmount": 51000,
+      "maxAmount": 200000,
+      "returnRate": 25,
+      "durationHours": 24,
+      "color": "border-amber-500/30 bg-amber-950/10 shadow-amber-500/5",
+      "badgeColor": "bg-amber-500/10 text-amber-400 border-amber-500/20"
+    },
+    {
+      "id": "plan_c",
+      "name": "PLAN C (VVIP Gold Invest)",
+      "minAmount": 210000,
+      "maxAmount": 10000000,
+      "returnRate": 30,
+      "durationHours": 24,
+      "color": "border-yellow-400 bg-gradient-to-b from-gray-950 via-gray-900 to-black shadow-yellow-400/10",
+      "badgeColor": "bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-semibold"
+    }
+  ]
+}
