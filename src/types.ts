@@ -15,6 +15,7 @@ export interface User {
   registrationDate: string;
   isEmailVerified: boolean;
   verificationCode?: string;
+  preferredPlan?: string;
 }
 
 export interface Investment {

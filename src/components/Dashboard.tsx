@@ -169,6 +169,32 @@ export default function Dashboard({ currentUser, onRefreshUser, onNavigate }: Da
     if (!withdrawAmount || Number(withdrawAmount) <= 0) return setError('Please enter a withdrawal amount');
     if (!withdrawPhone || !withdrawName) return setError('Please enter account number and name');
 
+    // Rule: withdrawals strictly done through same methods used to invest (deposit)
+    const hasDeposits = transactions.some(tx => tx.type === 'deposit' && tx.status === 'approved');
+    if (hasDeposits) {
+      const approvedDepositMethods: string[] = Array.from(new Set(
+        transactions
+          .filter(tx => tx.type === 'deposit' && tx.status === 'approved')
+          .map(tx => String(tx.method || ''))
+      ));
+      
+      const matchMethod = (wMeth: string, dMeth: string): boolean => {
+        const w = wMeth.toLowerCase();
+        const d = dMeth.toLowerCase();
+        if (w.includes('mtn') && d.includes('mtn')) return true;
+        if (w.includes('orange') && d.includes('orange')) return true;
+        if (w.includes('btc') && d.includes('btc')) return true;
+        if (w.includes('usdt') && d.includes('usdt')) return true;
+        if ((w.includes('bank') || w.includes('local')) && (d.includes('bank') || d.includes('local'))) return true;
+        return false;
+      };
+
+      const isAllowed = approvedDepositMethods.some(depM => matchMethod(withdrawMethod, depM));
+      if (!isAllowed) {
+        return setError(`Security Violation: Under our quantitative hedging terms, payouts are strictly restricted to the same payment channels used to deposit. Your approved deposit history contains: [${approvedDepositMethods.join(', ')}]. Please select an eligible matching method.`);
+      }
+    }
+
     setLoading(true);
     setError(null);
     setSuccess(null);
@@ -847,6 +873,34 @@ export default function Dashboard({ currentUser, onRefreshUser, onNavigate }: Da
               <span className="font-mono text-base font-black text-emerald-400">
                 {currentUser.withdrawalBalance.toLocaleString()} XAF
               </span>
+            </div>
+
+            {/* Same-Method Payment Routing Lock Disclaimer */}
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3.5 space-y-1">
+              <span className="text-[10px] font-mono font-bold text-amber-400 block uppercase">
+                🛡️ Channel Lock Policy: Same-Method Routing
+              </span>
+              <p className="text-[10px] text-gray-400 font-mono leading-normal">
+                To prevent arbitrage loops and comply with regional financial regulations, withdrawals are restricted strictly to the same payment networks used for capital funding.
+              </p>
+              {transactions.filter(tx => tx.type === 'deposit' && tx.status === 'approved').length > 0 ? (
+                <div className="pt-1.5 flex flex-wrap gap-1.5 items-center">
+                  <span className="text-[9px] text-gray-500 font-mono">Your approved deposit channels:</span>
+                  {Array.from(new Set(
+                    transactions
+                      .filter(tx => tx.type === 'deposit' && tx.status === 'approved')
+                      .map(tx => tx.method)
+                  )).map(method => (
+                    <span key={method} className="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-semibold">
+                      ● {method}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[9px] text-yellow-500/80 font-mono italic pt-1">
+                  * No previous approved deposit history found. Since you are using pre-seeded starter or demo capital, you may choose any payout channel. Subsequent payouts will lock to your active deposit methods.
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

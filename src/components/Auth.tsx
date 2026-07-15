@@ -25,6 +25,7 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
   const [referrer, setReferrer] = useState('');
   const [verifyCode, setVerifyCode] = useState('');
   const [unverifiedUserId, setUnverifiedUserId] = useState<string | null>(null);
+  const [preferredPlan, setPreferredPlan] = useState('plan_a');
 
   useEffect(() => {
     setMode(initialMode);
@@ -68,7 +69,10 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
       // Check if email is verified
       if (!data.user.isEmailVerified) {
         setUnverifiedUserId(data.user.id);
-        setError('Your email is not verified yet. Please verify your email.');
+        if (data.user.verificationCode) {
+          setVerifyCode(data.user.verificationCode);
+        }
+        setError('Your email is not verified yet. Please enter your verification code to activate your account.');
         setMode('verify');
         return;
       }
@@ -107,7 +111,8 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
           phone,
           country,
           password,
-          referrer
+          referrer,
+          preferredPlan
         })
       });
 
@@ -257,17 +262,17 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
                 <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5">
-                  Email Address
+                  Email Address or Username
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
                   <input
-                    type="email"
+                    type="text"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@domain.com"
-                    className="w-full bg-gray-950/80 border border-gray-800 text-sm text-white rounded-xl pl-10 pr-4 py-2.5.5 py-3 focus:outline-none focus:border-amber-400"
+                    placeholder="Username or email"
+                    className="w-full bg-gray-950/80 border border-gray-800 text-sm text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>
@@ -435,6 +440,25 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
                   placeholder="Referrer username"
                   className="w-full bg-gray-950/80 border border-gray-800 text-xs text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-amber-400"
                 />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5 flex items-center justify-between">
+                  <span>Preferred Starting Investment Option</span>
+                  <span className="text-[9px] text-amber-400 font-sans font-semibold">
+                    Flexible change later
+                  </span>
+                </label>
+                <select
+                  value={preferredPlan}
+                  onChange={(e) => setPreferredPlan(e.target.value)}
+                  className="w-full bg-gray-950 border border-gray-800 text-xs text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-amber-400 cursor-pointer"
+                >
+                  <option value="plan_a">Bronze Arbitrage (Yield +12%) - 24H Lock</option>
+                  <option value="plan_b">Silver Hedging (Yield +18%) - 24H Lock</option>
+                  <option value="plan_c">Gold Liquidation (Yield +25%) - 24H Lock</option>
+                  <option value="plan_d">VIP Institutional (Yield +35%) - 24H Lock</option>
+                </select>
               </div>
 
               {/* terms agreement */}

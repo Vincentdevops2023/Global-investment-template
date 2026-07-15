@@ -338,7 +338,7 @@ async function startServer() {
   // ==========================================
   
   app.post('/api/auth/register', (req, res) => {
-    const { fullName, username, email, phone, country, password, referrer } = req.body;
+    const { fullName, username, email, phone, country, password, referrer, preferredPlan } = req.body;
     
     if (!fullName || !username || !email || !password) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -368,7 +368,8 @@ async function startServer() {
       registrationDate: new Date().toISOString(),
       isEmailVerified: false,
       verificationCode,
-      password: password
+      password: password,
+      preferredPlan: preferredPlan || 'plan_a'
     };
 
     db.users.push(newUser);
@@ -418,10 +419,13 @@ async function startServer() {
       return res.status(400).json({ error: 'Please enter all fields' });
     }
 
-    const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const user = db.users.find(u => 
+      u.email.toLowerCase() === email.toLowerCase() ||
+      u.username.toLowerCase() === email.toLowerCase()
+    );
     
     if (!user) {
-      return res.status(401).json({ error: 'User does not exist with this email' });
+      return res.status(401).json({ error: 'User does not exist with this email or username' });
     }
 
     if (user.status === 'suspended') {
@@ -458,6 +462,7 @@ async function startServer() {
         status: user.status,
         twoFactorEnabled: user.twoFactorEnabled,
         isEmailVerified: user.isEmailVerified,
+        verificationCode: (user as any).verificationCode,
         isAdmin: user.username === 'admin' || user.email === 'admin@globalexchange.com' || user.email === 'admin@caminvest.com'
       }
     });
