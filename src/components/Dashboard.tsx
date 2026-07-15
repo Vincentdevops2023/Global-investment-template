@@ -643,9 +643,18 @@ export default function Dashboard({ currentUser, onRefreshUser, onNavigate }: Da
 
             {/* mtn */}
             <div className="bg-yellow-500/5 border border-yellow-500/10 rounded-xl p-4 space-y-2.5">
-              <span className="px-2 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded font-mono font-bold text-[9px] uppercase">
-                MTN Mobile Money
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="px-2 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded font-mono font-bold text-[9px] uppercase">
+                  MTN Mobile Money
+                </span>
+                {/* MTN MoMo Logo */}
+                <svg viewBox="0 0 80 26" className="h-6 w-auto rounded border border-[#002D62]/10 shadow" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="80" height="26" rx="5" fill="#FFCC00" />
+                  <ellipse cx="20" cy="13" rx="13" ry="9" fill="none" stroke="#002D62" strokeWidth="1.8" />
+                  <text x="20" y="16" fontFamily="sans-serif" fontSize="7" fontWeight="bold" fill="#002D62" textAnchor="middle">MTN</text>
+                  <text x="50" y="17" fontFamily="sans-serif" fontSize="9" fontWeight="900" fill="#002D62" textAnchor="middle">MoMo</text>
+                </svg>
+              </div>
               <p className="text-xs font-semibold leading-relaxed text-gray-200">
                 To pay via MoMo, dial merchant code on your handset:<br />
                 <code className="text-yellow-400 font-black text-sm bg-gray-950 px-2 py-1 rounded block mt-1.5 text-center">
@@ -657,9 +666,17 @@ export default function Dashboard({ currentUser, onRefreshUser, onNavigate }: Da
 
             {/* orange */}
             <div className="bg-orange-500/5 border border-orange-500/10 rounded-xl p-4 space-y-2.5">
-              <span className="px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded font-mono font-bold text-[9px] uppercase">
-                Orange Money
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded font-mono font-bold text-[9px] uppercase">
+                  Orange Money
+                </span>
+                {/* Orange Money Logo */}
+                <svg viewBox="0 0 90 26" className="h-6 w-auto rounded border border-orange-500/10 shadow" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="22" height="22" x="2" y="2" rx="3" fill="#FF6600" />
+                  <text x="13" y="15" fontFamily="sans-serif" fontSize="5" fontWeight="900" fill="#FFFFFF" textAnchor="middle">orange</text>
+                  <text x="56" y="17" fontFamily="sans-serif" fontSize="10" fontWeight="900" fill="#FF6600" letterSpacing="0.1">money</text>
+                </svg>
+              </div>
               <p className="text-xs font-semibold leading-relaxed text-gray-200">
                 To pay via Orange Money, dial merchant code:<br />
                 <code className="text-orange-400 font-black text-sm bg-gray-950 px-2 py-1 rounded block mt-1.5 text-center">
@@ -692,17 +709,37 @@ export default function Dashboard({ currentUser, onRefreshUser, onNavigate }: Da
                   <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5">
                     Deposit Method
                   </label>
-                  <select
-                    value={depositMethod}
-                    onChange={(e) => setDepositMethod(e.target.value)}
-                    className="w-full bg-gray-950 border border-gray-800 text-xs text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-amber-400"
-                  >
-                    <option value="MTN Mobile Money">MTN Mobile Money</option>
-                    <option value="Orange Money">Orange Money</option>
-                    <option value="Bank Transfer">Central Bank Transfer</option>
-                    <option value="BTC (Bitcoin)">BTC (Bitcoin)</option>
-                    <option value="USDT (TRC20)">USDT (TRC20)</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={depositMethod}
+                      onChange={(e) => setDepositMethod(e.target.value)}
+                      className="w-full bg-gray-950 border border-gray-800 text-xs text-white rounded-xl pl-3.5 pr-12 py-2.5 focus:outline-none focus:border-amber-400"
+                    >
+                      <option value="MTN Mobile Money">MTN Mobile Money</option>
+                      <option value="Orange Money">Orange Money</option>
+                      <option value="Bank Transfer">Central Bank Transfer</option>
+                      <option value="BTC (Bitcoin)">BTC (Bitcoin)</option>
+                      <option value="USDT (TRC20)">USDT (TRC20)</option>
+                    </select>
+                    {/* Floating Logo Preview */}
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
+                      {depositMethod === 'MTN Mobile Money' && (
+                        <svg viewBox="0 0 80 26" className="h-5 w-auto rounded" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="80" height="26" rx="4" fill="#FFCC00" />
+                          <ellipse cx="20" cy="13" rx="12" ry="8" fill="none" stroke="#002D62" strokeWidth="1.5" />
+                          <text x="20" y="16" fontFamily="sans-serif" fontSize="6.5" fontWeight="bold" fill="#002D62" textAnchor="middle">MTN</text>
+                          <text x="50" y="17" fontFamily="sans-serif" fontSize="8" fontWeight="900" fill="#002D62" textAnchor="middle">MoMo</text>
+                        </svg>
+                      )}
+                      {depositMethod === 'Orange Money' && (
+                        <svg viewBox="0 0 90 26" className="h-5 w-auto rounded" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="20" height="20" x="3" y="3" rx="3" fill="#FF6600" />
+                          <text x="13" y="15" fontFamily="sans-serif" fontSize="4.5" fontWeight="900" fill="#FFFFFF" textAnchor="middle">orange</text>
+                          <text x="54" y="17" fontFamily="sans-serif" fontSize="9" fontWeight="900" fill="#FF6600" letterSpacing="0.1">money</text>
+                        </svg>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
                 <div>
@@ -817,17 +854,37 @@ export default function Dashboard({ currentUser, onRefreshUser, onNavigate }: Da
                 <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5">
                   Payout Method
                 </label>
-                <select
-                  value={withdrawMethod}
-                  onChange={(e) => setWithdrawMethod(e.target.value)}
-                  className="w-full bg-gray-950 border border-gray-800 text-xs text-white rounded-xl px-3.5 py-2.5 focus:outline-none"
-                >
-                  <option value="MTN Mobile Money">MTN Mobile Money</option>
-                  <option value="Orange Money">Orange Money</option>
-                  <option value="Crypto BTC">BTC Wallet Address</option>
-                  <option value="Crypto USDT TRC20">USDT Wallet Address</option>
-                  <option value="Local Bank Transfer">Direct Bank Transfer</option>
-                </select>
+                  <div className="relative">
+                    <select
+                      value={withdrawMethod}
+                      onChange={(e) => setWithdrawMethod(e.target.value)}
+                      className="w-full bg-gray-950 border border-gray-800 text-xs text-white rounded-xl pl-3.5 pr-12 py-2.5 focus:outline-none"
+                    >
+                      <option value="MTN Mobile Money">MTN Mobile Money</option>
+                      <option value="Orange Money">Orange Money</option>
+                      <option value="Crypto BTC">BTC Wallet Address</option>
+                      <option value="Crypto USDT TRC20">USDT Wallet Address</option>
+                      <option value="Local Bank Transfer">Direct Bank Transfer</option>
+                    </select>
+                    {/* Floating Logo Preview */}
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
+                      {withdrawMethod === 'MTN Mobile Money' && (
+                        <svg viewBox="0 0 80 26" className="h-5 w-auto rounded" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="80" height="26" rx="4" fill="#FFCC00" />
+                          <ellipse cx="20" cy="13" rx="12" ry="8" fill="none" stroke="#002D62" strokeWidth="1.5" />
+                          <text x="20" y="16" fontFamily="sans-serif" fontSize="6.5" fontWeight="bold" fill="#002D62" textAnchor="middle">MTN</text>
+                          <text x="50" y="17" fontFamily="sans-serif" fontSize="8" fontWeight="900" fill="#002D62" textAnchor="middle">MoMo</text>
+                        </svg>
+                      )}
+                      {withdrawMethod === 'Orange Money' && (
+                        <svg viewBox="0 0 90 26" className="h-5 w-auto rounded" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="20" height="20" x="3" y="3" rx="3" fill="#FF6600" />
+                          <text x="13" y="15" fontFamily="sans-serif" fontSize="4.5" fontWeight="900" fill="#FFFFFF" textAnchor="middle">orange</text>
+                          <text x="54" y="17" fontFamily="sans-serif" fontSize="9" fontWeight="900" fill="#FF6600" letterSpacing="0.1">money</text>
+                        </svg>
+                      )}
+                    </div>
+                  </div>
               </div>
 
               <div>

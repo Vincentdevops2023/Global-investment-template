@@ -351,7 +351,7 @@ async function startServer() {
 
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     
-    const newUser: User = {
+    const newUser: User & { password?: string } = {
       id: 'user_' + Math.random().toString(36).substr(2, 9),
       fullName,
       username,
@@ -367,7 +367,8 @@ async function startServer() {
       twoFactorEnabled: false,
       registrationDate: new Date().toISOString(),
       isEmailVerified: false,
-      verificationCode
+      verificationCode,
+      password: password
     };
 
     db.users.push(newUser);
@@ -430,6 +431,14 @@ async function startServer() {
     // Mock simple password validation - for preview, allow custom pass unless it is demo accounts
     if (user.id === 'user_admin' && password !== 'admin123') {
       return res.status(401).json({ error: 'Invalid administrator credentials' });
+    }
+
+    if (user.id === 'user_demo' && password !== 'demo') {
+      return res.status(401).json({ error: 'Invalid investor credentials' });
+    }
+
+    if ((user as any).password && (user as any).password !== password) {
+      return res.status(401).json({ error: 'Invalid password' });
     }
 
     res.json({
