@@ -59,7 +59,15 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
         body: JSON.stringify({ email, password })
       });
 
-      const data = await res.json();
+      let data;
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        setLoading(false);
+        return setError(`Server Error (${res.status}): ${text.substring(0, 120) || 'Internal server error'}`);
+      }
       setLoading(false);
 
       if (!res.ok) {
@@ -116,7 +124,15 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
         })
       });
 
-      const data = await res.json();
+      let data;
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        setLoading(false);
+        return setError(`Server Error (${res.status}): ${text.substring(0, 120) || 'Internal server error'}`);
+      }
       setLoading(false);
 
       if (!res.ok) {

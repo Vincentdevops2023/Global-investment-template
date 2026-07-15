@@ -326,6 +326,19 @@ function processActiveInvestments() {
 processActiveInvestments();
 setInterval(processActiveInvestments, 10000);
 
+// Helper to parse cookies from headers
+function parseCookies(cookieHeader?: string): Record<string, string> {
+  const cookies: Record<string, string> = {};
+  if (!cookieHeader) return cookies;
+  cookieHeader.split(';').forEach(cookie => {
+    const parts = cookie.match(/(.*?)=(.*)$/);
+    if (parts) {
+      cookies[parts[1].trim()] = (parts[2] || '').trim();
+    }
+  });
+  return cookies;
+}
+
 // Set up server
 async function startServer() {
   const app = express();
@@ -345,7 +358,7 @@ async function startServer() {
     }
 
     const emailLower = email.toLowerCase();
-    if (db.users.find(u => u.email.toLowerCase() === emailLower || u.username.toLowerCase() === username.toLowerCase())) {
+    if (db.users.find(u => (u.email && u.email.toLowerCase() === emailLower) || (u.username && u.username.toLowerCase() === username.toLowerCase()))) {
       return res.status(400).json({ error: 'Email or Username already exists' });
     }
 
@@ -376,7 +389,7 @@ async function startServer() {
 
     // If referred, register referral record
     if (referrer) {
-      const referrerUser = db.users.find(u => u.username.toLowerCase() === referrer.toLowerCase());
+      const referrerUser = db.users.find(u => u.username && u.username.toLowerCase() === referrer.toLowerCase());
       if (referrerUser) {
         referrerUser.referralBonus += 1000; // Referrer gets 1000 XAF commission right away
         referrerUser.withdrawalBalance += 1000;
@@ -420,8 +433,8 @@ async function startServer() {
     }
 
     const user = db.users.find(u => 
-      u.email.toLowerCase() === email.toLowerCase() ||
-      u.username.toLowerCase() === email.toLowerCase()
+      (u.email && u.email.toLowerCase() === email.toLowerCase()) ||
+      (u.username && u.username.toLowerCase() === email.toLowerCase())
     );
     
     if (!user) {
@@ -444,6 +457,8 @@ async function startServer() {
     if ((user as any).password && (user as any).password !== password) {
       return res.status(401).json({ error: 'Invalid password' });
     }
+
+    res.setHeader('Set-Cookie', `session_user_id=${user.id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400`);
 
     res.json({
       message: 'Login successful!',
@@ -468,6 +483,43 @@ async function startServer() {
     });
   });
 
+  app.get('/api/auth/current', (req, res) => {
+    const cookies = parseCookies(req.headers.cookie);
+    const userId = cookies['session_user_id'];
+    if (!userId) {
+      return res.status(401).json({ error: 'No active session' });
+    }
+    const user = db.users.find(u => u.id === userId);
+    if (!user) {
+      return res.status(401).json({ error: 'Session user not found' });
+    }
+    res.json({
+      user: {
+        id: user.id,
+        fullName: user.fullName,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        country: user.country,
+        totalBalance: user.totalBalance,
+        activeInvestment: user.activeInvestment,
+        profitEarned: user.profitEarned,
+        referralBonus: user.referralBonus,
+        withdrawalBalance: user.withdrawalBalance,
+        status: user.status,
+        twoFactorEnabled: user.twoFactorEnabled,
+        isEmailVerified: user.isEmailVerified,
+        verificationCode: (user as any).verificationCode,
+        isAdmin: user.username === 'admin' || user.email === 'admin@globalexchange.com' || user.email === 'admin@caminvest.com'
+      }
+    });
+  });
+
+  app.post('/api/auth/logout', (req, res) => {
+    res.setHeader('Set-Cookie', 'session_user_id=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+    res.json({ message: 'Logged out successfully' });
+  });
+
   app.post('/api/auth/verify-email', (req, res) => {
     const { userId, code } = req.body;
     const user = db.users.find(u => u.id === userId);
@@ -486,7 +538,7 @@ async function startServer() {
 
   app.post('/api/auth/forgot-password', (req, res) => {
     const { email } = req.body;
-    const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const user = db.users.find(u => u.email && u.email.toLowerCase() === (email || '').toLowerCase());
     
     if (!user) {
       return res.status(404).json({ error: 'No user found with this email' });
