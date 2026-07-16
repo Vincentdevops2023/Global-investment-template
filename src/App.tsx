@@ -167,91 +167,71 @@ export default function App() {
         
         {/* HOMEPAGE VIEW */}
         {currentPage === 'home' && (
-          <div className="space-y-24 animate-in fade-in duration-500" id="homepage-root">
+          <div className="space-y-16 py-8 md:py-12 animate-in fade-in duration-500" id="homepage-root">
             
-            {/* HERO SECTION */}
-            <section className="relative pt-12 md:pt-20 pb-16" id="hero-panel">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                {/* Hero Words Left */}
-                <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-mono uppercase text-amber-400 tracking-wider">
-                    <Zap className="h-3.5 w-3.5 animate-pulse text-amber-400" />
-                    FinTech Quantitative Hedging Solution
-                  </div>
-
-                  <h1 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-tight text-white">
-                    Grow Your Investment in Just <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500 underline decoration-yellow-400/40">24 Hours</span>
-                  </h1>
-
-                  <p className="text-sm sm:text-base text-gray-400 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                    Invest securely and receive guaranteed, high-performance returns based on your selected investment plan. Backed by automated reserves and leading mobile networks Orange & MTN.
-                  </p>
-
-                  {/* Actions CTA buttons */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                    <button
-                      onClick={() => setCurrentPage(currentUser ? 'dashboard' : 'auth_register')}
-                      className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-mono font-bold text-xs uppercase tracking-widest rounded-xl shadow-lg shadow-amber-500/10 hover:scale-105 transition duration-300 flex items-center justify-center gap-2"
-                    >
-                      Start Investing Now <ArrowUpRight className="h-4 w-4 shrink-0" />
-                    </button>
-                    <a
-                      href="#live-charts"
-                      className="w-full sm:w-auto px-8 py-4 bg-gray-950/80 hover:bg-gray-900 border border-gray-800 hover:border-amber-500/30 text-gray-300 hover:text-white font-mono font-bold text-xs uppercase tracking-widest rounded-xl transition duration-200 text-center"
-                    >
-                      Watch Live Markets
-                    </a>
-                  </div>
-
-                  {/* Trust Highlights */}
-                  <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-900 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
-                    <div>
-                      <span className="font-mono text-xl font-extrabold text-white">24h</span>
-                      <p className="text-[10px] text-gray-500 uppercase tracking-wider font-mono mt-0.5">Yield Release</p>
-                    </div>
-                    <div>
-                      <span className="font-mono text-xl font-extrabold text-white">20% - 30%</span>
-                      <p className="text-[10px] text-gray-500 uppercase tracking-wider font-mono mt-0.5">Guaranteed Profit</p>
-                    </div>
-                    <div>
-                      <span className="font-mono text-xl font-extrabold text-white">0 XAF</span>
-                      <p className="text-[10px] text-gray-500 uppercase tracking-wider font-mono mt-0.5">Transaction Fees</p>
-                    </div>
-                  </div>
+            {/* WEBSITE DESCRIPTION (HERO) SECTION */}
+            <section className="relative" id="hero-panel">
+              <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-mono uppercase text-amber-400 tracking-wider">
+                  <Zap className="h-3.5 w-3.5 animate-pulse text-amber-400" />
+                  FinTech Quantitative Hedging Solution
                 </div>
 
-                {/* Hero Right: Live Quantitative Interactive Chart Widget */}
-                <div className="lg:col-span-5 relative" id="live-charts">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-2xl blur opacity-15 pointer-events-none" />
-                  <div className="relative bg-[#050811] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
-                    <div className="p-4 border-b border-gray-900 bg-gray-950/40 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span className="text-[10px] font-mono uppercase font-bold text-gray-400">BTC / XAF Live Arbitration Engine</span>
-                      </div>
-                      <span className="text-[10px] font-mono text-gray-500 uppercase">HEDGED v2.5</span>
-                    </div>
-                    {/* Render Interactive chart */}
-                    <div className="p-4 h-[280px]">
-                      <TradingViewChart />
-                    </div>
-                  </div>
+                <h1 className="font-display font-black text-2xl sm:text-4xl lg:text-5xl tracking-tight leading-tight text-white">
+                  Grow Your Investment in Just <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500 underline decoration-yellow-400/40">24 Hours</span>
+                </h1>
+
+                <p className="text-xs sm:text-sm text-gray-400 max-w-2xl leading-relaxed mx-auto">
+                  Invest securely and receive guaranteed, high-performance returns based on your selected investment plan. Backed by automated reserves and leading mobile networks Orange & MTN.
+                </p>
+
+                {/* Actions CTA buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                  <button
+                    onClick={() => setCurrentPage(currentUser ? 'dashboard' : 'auth_register')}
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-mono font-bold text-xs uppercase tracking-widest rounded-xl shadow-lg shadow-amber-500/10 hover:scale-102 transition duration-200 flex items-center justify-center gap-2"
+                  >
+                    Start Investing Now <ArrowUpRight className="h-4 w-4 shrink-0" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      const el = document.getElementById('plans');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="w-full sm:w-auto px-6 py-3 bg-gray-950/80 hover:bg-gray-900 border border-gray-800 hover:border-amber-500/30 text-gray-300 hover:text-white font-mono font-bold text-xs uppercase tracking-widest rounded-xl transition duration-200 text-center"
+                  >
+                    View Investment Plans
+                  </button>
                 </div>
 
+                {/* Trust Highlights */}
+                <div className="grid grid-cols-3 gap-3 pt-6 border-t border-gray-900 max-w-md mx-auto text-center font-mono">
+                  <div>
+                    <span className="text-lg font-extrabold text-white">24h</span>
+                    <p className="text-[9px] text-gray-500 uppercase tracking-wider mt-0.5">Yield Release</p>
+                  </div>
+                  <div>
+                    <span className="text-lg font-extrabold text-white">20% - 30%</span>
+                    <p className="text-[9px] text-gray-500 uppercase tracking-wider mt-0.5">Guaranteed Profit</p>
+                  </div>
+                  <div>
+                    <span className="text-lg font-extrabold text-white">0 XAF</span>
+                    <p className="text-[9px] text-gray-500 uppercase tracking-wider mt-0.5">Fees</p>
+                  </div>
+                </div>
               </div>
             </section>
 
             {/* INVESTMENT PLANS SECTION */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20" id="plans">
-              <div className="text-center space-y-2 mb-12">
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 scroll-mt-20" id="plans">
+              <div className="text-center space-y-2 mb-10">
                 <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-mono uppercase text-amber-400 tracking-wider">
                   Select Your Portfolio Tier
                 </span>
-                <h2 className="font-display font-black text-2xl sm:text-4xl text-white">
+                <h2 className="font-display font-black text-xl sm:text-3xl text-white">
                   Audited Institutional Investment Plans
                 </h2>
-                <p className="text-xs sm:text-sm text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xs text-gray-400 max-w-2xl mx-auto leading-relaxed">
                   Lock your capital securely for 24 hours. Interest rewards are generated by automatic arbitrage liquidations and settled directly in Mobile Money XAF balances.
                 </p>
               </div>
@@ -355,162 +335,6 @@ export default function App() {
                   </div>
                 </div>
 
-              </div>
-            </section>
-
-            {/* PROFIT CALCULATOR SECTION */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20" id="calculator">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                {/* Words Left */}
-                <div className="lg:col-span-5 space-y-5 text-center lg:text-left">
-                  <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-mono uppercase text-amber-400 tracking-wider">
-                    Forecast Earnings
-                  </span>
-                  <h2 className="font-display font-black text-2xl sm:text-4xl text-white">
-                    Real-Time Investment Profit Calculator
-                  </h2>
-                  <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                    Accurately audit and calculate your net profit, total accruals, and direct payout values instantly by selecting your capital limit. No hidden administrative fees.
-                  </p>
-                  
-                  {/* Security items */}
-                  <div className="space-y-3 pt-2">
-                    <div className="flex items-center gap-3 justify-center lg:justify-start">
-                      <div className="p-1 bg-emerald-500/10 rounded border border-emerald-500/20 text-emerald-400 shrink-0">
-                        <CheckCircle className="h-4 w-4" />
-                      </div>
-                      <span className="text-xs text-gray-300 font-semibold">100% Capital Principal Shield Protection</span>
-                    </div>
-                    <div className="flex items-center gap-3 justify-center lg:justify-start">
-                      <div className="p-1 bg-emerald-500/10 rounded border border-emerald-500/20 text-emerald-400 shrink-0">
-                        <CheckCircle className="h-4 w-4" />
-                      </div>
-                      <span className="text-xs text-gray-300 font-semibold">Automatic Settlement after 24 Hours lock</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Interactive Calculator Right */}
-                <div className="lg:col-span-7">
-                  <div className="glass-panel-glow-gold rounded-2xl border border-gray-800 p-6 relative">
-                    <Calculator />
-                  </div>
-                </div>
-
-              </div>
-            </section>
-
-            {/* ABOUT US & SECURITY PROTOCOLS */}
-            <section className="bg-gradient-to-b from-[#0B132B]/20 to-black/40 py-16 scroll-mt-20" id="about">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                {/* Left Side: Highlights of our Douala FinTech Team */}
-                <div className="lg:col-span-6 space-y-6">
-                  <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-mono uppercase text-amber-400 tracking-wider">
-                    About Our Platform
-                  </span>
-                  <h2 className="font-display font-black text-2xl sm:text-4xl text-white">
-                    The Safest FinTech Hedging Engine in Douala
-                  </h2>
-                  <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                    Founded by veteran quantitative analysts, GLOBAL EXCHANGE AND TRADE INVESTMENTS bridges global financial liquidity and Cameroon investors. By using professional computer-driven hedging protocols, we hedge assets against high-frequency rates, creating a fully protected environment for stable yields.
-                  </p>
-                  
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-2 gap-4 pt-4">
-                    <div className="p-4 bg-gray-950/80 border border-gray-900 rounded-xl">
-                      <span className="text-lg font-mono font-black text-amber-400">250M+ XAF</span>
-                      <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider mt-0.5">Total Audited Settlements</p>
-                    </div>
-                    <div className="p-4 bg-gray-950/80 border border-gray-900 rounded-xl">
-                      <span className="text-lg font-mono font-black text-emerald-400">12,000+</span>
-                      <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider mt-0.5">Active Secured Portfolios</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Side: Security Protocols Bento boxes */}
-                <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-[#101323] border border-gray-800 rounded-2xl p-5 space-y-3">
-                    <div className="p-2.5 bg-amber-400/10 rounded-xl text-amber-400 w-fit">
-                      <ShieldCheck className="h-5 w-5" />
-                    </div>
-                    <h4 className="text-xs font-bold text-white uppercase font-mono">Principal Protection</h4>
-                    <p className="text-[11px] text-gray-400 leading-relaxed">
-                      We secure investor principals inside ring-fenced hedging reserves, insulating funds from market liquidations.
-                    </p>
-                  </div>
-
-                  <div className="bg-[#101323] border border-gray-800 rounded-2xl p-5 space-y-3">
-                    <div className="p-2.5 bg-emerald-400/10 rounded-xl text-emerald-400 w-fit">
-                      <Activity className="h-5 w-5" />
-                    </div>
-                    <h4 className="text-xs font-bold text-white uppercase font-mono">MTN / Orange Gateway</h4>
-                    <p className="text-[11px] text-gray-400 leading-relaxed">
-                      Direct SSL API bindings with MTN MoMo & Orange Money ensure zero processing delay on deposits & withdrawals.
-                    </p>
-                  </div>
-
-                  <div className="bg-[#101323] border border-gray-800 rounded-2xl p-5 space-y-3">
-                    <div className="p-2.5 bg-purple-400/10 rounded-xl text-purple-400 w-fit">
-                      <Users className="h-5 w-5" />
-                    </div>
-                    <h4 className="text-xs font-bold text-white uppercase font-mono">Affiliate Multiplier</h4>
-                    <p className="text-[11px] text-gray-400 leading-relaxed">
-                      Receive lifetime commissions of 1,000 XAF for every colleague you refer, expanding Cameroon wealth.
-                    </p>
-                  </div>
-
-                  <div className="bg-[#101323] border border-gray-800 rounded-2xl p-5 space-y-3">
-                    <div className="p-2.5 bg-rose-400/10 rounded-xl text-rose-400 w-fit">
-                      <Globe className="h-5 w-5" />
-                    </div>
-                    <h4 className="text-xs font-bold text-white uppercase font-mono">24/7 AI Desk</h4>
-                    <p className="text-[11px] text-gray-400 leading-relaxed">
-                      Our custom-grounded CamBot AI support agent operates around the clock to respond to deposit or plan queries.
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-            </section>
-
-            {/* PLATFORM FAQ ACCORDIONS */}
-            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20" id="faq">
-              <div className="text-center space-y-2 mb-12">
-                <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-mono uppercase text-amber-400 tracking-wider">
-                  Audited Frequently Asked Questions
-                </span>
-                <h2 className="font-display font-black text-2xl sm:text-3xl text-white">
-                  Platform Clarifications & FAQs
-                </h2>
-                <p className="text-xs text-gray-400 leading-relaxed">
-                  Have a question before locking your capital? Read our direct answers compiled by our Douala compliance desk.
-                </p>
-              </div>
-
-              {/* Accordion container */}
-              <div className="space-y-4">
-                {staticFaqs.map((faq, i) => (
-                  <div 
-                    key={i} 
-                    className="bg-gray-950/80 border border-gray-900 rounded-2xl overflow-hidden transition duration-200"
-                  >
-                    <button
-                      onClick={() => toggleFaq(i)}
-                      className="w-full text-left p-5 flex items-center justify-between text-xs font-bold text-white hover:text-amber-400 transition"
-                    >
-                      <span>{faq.q}</span>
-                      <ChevronDown className={`h-4.5 w-4.5 text-gray-500 transition-transform duration-300 ${faqOpenIndex === i ? 'rotate-180 text-amber-400' : ''}`} />
-                    </button>
-                    {faqOpenIndex === i && (
-                      <div className="px-5 pb-5 pt-1 text-xs text-gray-400 leading-relaxed border-t border-gray-900/40 animate-in fade-in duration-250">
-                        {faq.a}
-                      </div>
-                    )}
-                  </div>
-                ))}
               </div>
             </section>
 
