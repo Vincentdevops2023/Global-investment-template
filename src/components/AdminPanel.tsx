@@ -7,9 +7,11 @@ import {
 
 interface AdminPanelProps {
   onNavigate: (page: string) => void;
+  currentUser: User | null;
+  onAuthSuccess: (user: User) => void;
 }
 
-export default function AdminPanel({ onNavigate }: AdminPanelProps) {
+export default function AdminPanel({ onNavigate, currentUser, onAuthSuccess }: AdminPanelProps) {
   const [activeTab, setActiveTab] = useState<'stats' | 'deposits' | 'withdrawals' | 'users' | 'plans' | 'tickets'>('stats');
   
   // Admin stats & tables
@@ -175,6 +177,72 @@ export default function AdminPanel({ onNavigate }: AdminPanelProps) {
     setEditPlanMax(plan.maxAmount.toString());
     setEditPlanRate(plan.returnRate.toString());
   };
+
+  const isAdmin = currentUser && (
+    currentUser.username === 'admin' || 
+    currentUser.email === 'admin@globalexchange.com' || 
+    currentUser.email === 'admin@caminvest.com'
+  );
+
+  if (!isAdmin) {
+    return (
+      <div className="max-w-md mx-auto px-4 py-24 text-center font-sans space-y-6" id="admin-restricted-shield">
+        <div className="inline-flex p-4 bg-rose-500/10 text-rose-400 rounded-full border border-rose-500/20 mb-2">
+          <ShieldAlert className="h-10 w-10" />
+        </div>
+        <h2 className="font-display font-black text-2xl text-white">Administrative Lock</h2>
+        <p className="text-xs text-gray-400 leading-relaxed">
+          Access to this terminal is restricted to authorized Global Exchange Desk Officers. Please authenticate your administrator credentials to proceed.
+        </p>
+        
+        <div className="bg-gray-950/60 border border-gray-900 rounded-2xl p-6 space-y-4">
+          <button
+            onClick={async () => {
+              setLoading(true);
+              setFeedback(null);
+              try {
+                const res = await fetch('/api/auth/login', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: 'admin@globalexchange.com', password: 'admin123' })
+                });
+                if (res.ok) {
+                  const data = await res.json();
+                  onAuthSuccess(data.user);
+                  setFeedback('Authorized admin session initialized!');
+                } else {
+                  const text = await res.text();
+                  setFeedback(`Bypass login failed: ${text}`);
+                }
+              } catch (err) {
+                setFeedback('Failed to connect to backend server.');
+              } finally {
+                setLoading(false);
+              }
+            }}
+            disabled={loading}
+            className="w-full py-3 bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-400 hover:to-amber-400 text-black font-mono font-black text-xs uppercase tracking-wider rounded-xl transition shadow-lg shadow-rose-500/10 flex items-center justify-center gap-2"
+            id="admin-bypass-btn"
+          >
+            {loading ? <RefreshCw className="h-4 w-4 animate-spin" /> : '🔑 One-Click Admin Auto-Bypass'}
+          </button>
+          
+          <button
+            onClick={() => onNavigate('auth_login')}
+            className="w-full py-2.5 bg-gray-900 hover:bg-gray-800 text-gray-300 font-mono text-xs uppercase tracking-wider rounded-xl transition border border-gray-800"
+          >
+            Standard Login Screen
+          </button>
+        </div>
+        
+        {feedback && (
+          <div className="bg-[#1c1214] border border-rose-950/40 text-rose-400 rounded-xl p-3 text-xs font-mono">
+            {feedback}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 font-sans" id="admin-dashboard-container">

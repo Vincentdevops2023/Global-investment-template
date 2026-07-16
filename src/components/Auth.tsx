@@ -254,10 +254,36 @@ export default function Auth({ onAuthSuccess, initialMode = 'login', onNavigate 
 
           {/* Quick instructions for testing admin/demo account */}
           {mode === 'login' && (
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-[10px] text-amber-400 font-mono mb-4 leading-normal">
-              <strong>💡 Demo Logins:</strong><br />
-              • Admin: <code className="text-white">admin@globalexchange.com</code> | Pass: <code className="text-white">admin123</code><br />
-              • Investor: <code className="text-white">user@demo.com</code> | Pass: <code className="text-white">demo</code>
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-[10px] text-amber-400 font-mono mb-4 leading-normal space-y-2">
+              <strong className="block text-amber-400">💡 Quick-Bypass Demo Logins:</strong>
+              <div className="flex items-center justify-between gap-1.5 border-b border-amber-500/10 pb-1.5">
+                <span>• Admin: <code className="text-white font-semibold">admin@globalexchange.com</code> (Pass: <code className="text-white">admin123</code>)</span>
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setEmail('admin@globalexchange.com');
+                    setPassword('admin123');
+                    setError(null);
+                  }}
+                  className="px-2 py-0.5 bg-rose-500 text-black text-[9px] font-black uppercase rounded hover:bg-rose-400 transition"
+                >
+                  Auto-fill
+                </button>
+              </div>
+              <div className="flex items-center justify-between gap-1.5">
+                <span>• Investor: <code className="text-white font-semibold">user@demo.com</code> (Pass: <code className="text-white">demo</code>)</span>
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setEmail('user@demo.com');
+                    setPassword('demo');
+                    setError(null);
+                  }}
+                  className="px-2 py-0.5 bg-emerald-500 text-black text-[9px] font-black uppercase rounded hover:bg-emerald-400 transition"
+                >
+                  Auto-fill
+                </button>
+              </div>
             </div>
           )}
 

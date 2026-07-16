@@ -631,6 +631,11 @@ export default function App() {
         {currentPage === 'admin' && (
           <AdminPanel 
             onNavigate={setCurrentPage}
+            currentUser={currentUser}
+            onAuthSuccess={(user) => {
+              setCurrentUser(user);
+              setCurrentPage('admin');
+            }}
           />
         )}
 

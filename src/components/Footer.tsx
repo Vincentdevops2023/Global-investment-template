@@ -117,6 +117,15 @@ export default function Footer({ onNavigate }: FooterProps) {
                 About Our Hedging Protocols
               </button>
             </li>
+            <li>
+              <button 
+                onClick={() => onNavigate('admin')} 
+                className="text-rose-400/80 hover:text-rose-400 transition text-left font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 mt-2"
+                id="footer-admin-link"
+              >
+                🔒 Admin Control Desk
+              </button>
+            </li>
           </ul>
         </div>
 
